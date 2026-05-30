@@ -2,19 +2,18 @@
 
 At least one copy flag is required; without one the CLI exits with usage
 error. Both profiles must be the same side (offense ↔ offense, defense ↔
-defense). PNFL rule violations on the resulting target are surfaced as
-`PnflRuleWarning` from the underlying `PnflProfile.save()`.
+defense). PNFL rule violations on the resulting target are logged at WARNING
+by `PnflProfile.save()`; the target is written regardless.
 """
 
 from __future__ import annotations
 
 import argparse
 import logging
-import warnings
 from collections.abc import Sequence
 from pathlib import Path
 
-from pnfl_profile import InvalidProfileError, PnflRuleWarning, UnsupportedProfileError
+from pnfl_profile import InvalidProfileError, UnsupportedProfileError
 
 from pnfl_profilewriter.main import copy_profile
 from pnfl_profilewriter.profile_writer import ProfileTypeMismatchError
@@ -110,8 +109,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         level=logging.INFO,
         format="%(levelname)s: %(message)s",
     )
-    # Surface every PNFL rule warning on every save. Matches write-gameplan.
-    warnings.simplefilter("always", PnflRuleWarning)
     try:
         copy_profile(
             source_path=Path(args.source_path),
