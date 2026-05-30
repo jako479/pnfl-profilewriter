@@ -16,6 +16,9 @@ dependencies = ["pnfl-profile"]
 [project.optional-dependencies]
 dev = ["pytest", "pyright==1.1.409", "ruff", "ipython"]
 
+[project.entry-points."pnfl.commands"]
+copy-profile = "pnfl_profilewriter.copy_cli:main"
+
 [project.urls]
 Homepage = "https://github.com/jako479/pnfl-profilewriter"
 Repository = "https://github.com/jako479/pnfl-profilewriter"
